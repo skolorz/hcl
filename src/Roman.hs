@@ -55,7 +55,7 @@ good = [
     (3999, "MMMCMXCIX")
     ]
 test :: [(Int, String, String)]
-test = [(d,r,romanNumber d) | (d,r) <- good, r /= romanNumber d]
+test = [(d,r,result) | (d,r) <- good, let result = romanNumber d, r /= result]
 
 main = do
     print (romanNumber 1)
