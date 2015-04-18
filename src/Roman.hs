@@ -18,9 +18,9 @@ romanNumber n
     | otherwise = 'I' : romanNumber (n-1) 
 
 readRoman :: String -> Int
-readRoman s
-    [] = 0
-    | otherwise = error s
+readRoman [] = 0
+readRoman ('I':xs) = 1 + readRoman xs
+readRoman _ = 0 
 
 good :: [(Int, String)]
 good = [
