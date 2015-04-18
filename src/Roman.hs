@@ -1,7 +1,6 @@
 module Roman where
 romanNumber n
     | n == 0 = ""
-    | n <  4 = 'I' : romanNumber (n-1)
     | n >= 1000 = 'M' : romanNumber (n-1000)
     | n >= 900 = 'C' : romanNumber (n+100)
     | n >= 500 = 'D' : romanNumber (n-500)
@@ -11,8 +10,10 @@ romanNumber n
     | n >= 50 = 'L' : romanNumber (n-50)
     | n >= 40 = 'X' : romanNumber (n+10)
     | n >= 10 = 'X' : romanNumber (n-10)
-    | n >= 5 && n < 9 = 'V' : romanNumber (n-5)
-    | otherwise = 'I' : romanNumber (n+1) 
+    | n >= 9  = 'I' : romanNumber (n+1)
+    | n >= 5 = 'V' : romanNumber (n-5)
+    | n >= 4  = 'I' : romanNumber (n+1)
+    | otherwise = 'I' : romanNumber (n-1) 
 
 good = [
     (1, "I"),
