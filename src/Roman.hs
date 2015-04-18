@@ -18,22 +18,15 @@ romanNumber n
     | otherwise = 'I' : romanNumber (n-1) 
 
 digits = [('I',1),('V',5),('X',10),('L',50),('C',100),('D',500),('M',1000)]
-digitValue x = head [v | (d,v) <- digits, x == d] 
+isReducer d = elem d "IXC"
+rval x = head [v | (d,v) <- digits, x == d] 
 
 readRoman :: String -> Int
 readRoman [] = 0
-readRoman ('I':'V':xs) = 4 
-readRoman ('I':'X':xs) = 9 
-readRoman ('X':'L':xs) = 40 + readRoman xs
-readRoman ('X':'C':xs) = 90 + readRoman xs
-readRoman ('I':xs) = 1 + readRoman xs
-readRoman ('V':xs) = 5 + readRoman xs
-readRoman ('X':xs) = 10 + readRoman xs
-readRoman ('L':xs) = 50 + readRoman xs
-readRoman ('C':xs) = 100 + readRoman xs
-readRoman ('D':xs) = 500 + readRoman xs
-readRoman ('M':xs) = 1000 + readRoman xs
-readRoman _ = 0 
+readRoman (r:d:xs)
+        | isReducer r && reducer < digit = digit - reducer + readRoman xs
+        where (reducer,digit) = (rval r, rval d)
+readRoman (x:xs) = rval x + readRoman xs
 
 good :: [(Int, String)]
 good = [
