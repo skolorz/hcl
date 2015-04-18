@@ -10,11 +10,11 @@ romanNumber :: Int -> String
 romanNumber 0 = ""
 romanNumber n
     | n >= 900 && n < 1000 = 'C' : romanNumber (n+100)
-    | n >= 400 && n < 500  = 'C' : romanNumber (n+100)
     | n >= 90 && n < 100 = 'X' : romanNumber (n+10)
-    | n >= 40 && n < 50 = 'X' : romanNumber (n+10)
     | n == 9  = 'I' : romanNumber (n+1)
-    | n == 4  = 'I' : romanNumber (n+1)
+romanNumber n 
+    | n >= (4 * v) && n < (5 * v)  =   d : romanNumber(n+v)
+    where  (d,v) = matchDigit n
 romanNumber n = let (d,v) = matchDigit n in d:romanNumber (n-v) 
 
 readRoman :: String -> Int
