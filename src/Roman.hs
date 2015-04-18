@@ -17,6 +17,11 @@ romanNumber n
     | n >= 4  = 'I' : romanNumber (n+1)
     | otherwise = 'I' : romanNumber (n-1) 
 
+readRoman :: String -> Int
+readRoman s
+    [] = 0
+    | otherwise = error s
+
 good :: [(Int, String)]
 good = [
     (1, "I"),
@@ -54,8 +59,13 @@ good = [
     (3297, "MMMCCXCVII"),
     (3999, "MMMCMXCIX")
     ]
-test :: [(Int, String, String)]
-test = [(d,r,result) | (d,r) <- good, let result = romanNumber d, r /= result]
+    
+testRoman :: [(Int, String, String)]
+testRoman = [(d,r,result) | (d,r) <- good, let result = romanNumber d, r /= result]
+
+testReadRoman :: [(Int, String, Int)]
+testReadRoman = [(d,r,result) | (d,r) <- good, let result = readRoman r, d /= result]
+ 
 
 main = do
     print (romanNumber 1)
