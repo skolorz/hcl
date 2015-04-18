@@ -1,25 +1,21 @@
 module Roman where
 
 digits = [('M',1000),('D',500),('C',100),('L',50),('X',10),('V',5),('I',1)]
+matchDigit :: Int -> (Char,Int)
+matchDigit n = head [(d,v) | (d,v) <- digits,  v <= n]
 isReducer d = elem d "IXC"
 rval x = head [v | (d,v) <- digits, x == d] 
 
 romanNumber :: Int -> String
 romanNumber 0 = ""
 romanNumber n
-    | n >= 1000 = 'M' : romanNumber (n-1000)
-    | n >= 900 = 'C' : romanNumber (n+100)
-    | n >= 500 = 'D' : romanNumber (n-500)
-    | n >= 400 = 'C' : romanNumber (n+100)
-    | n >= 100 = 'C' : romanNumber (n-100)
-    | n >= 90 = 'X' : romanNumber (n+10)
-    | n >= 50 = 'L' : romanNumber (n-50)
-    | n >= 40 = 'X' : romanNumber (n+10)
-    | n >= 10 = 'X' : romanNumber (n-10)
-    | n >= 9  = 'I' : romanNumber (n+1)
-    | n >= 5 = 'V' : romanNumber (n-5)
-    | n >= 4  = 'I' : romanNumber (n+1)
-    | otherwise = 'I' : romanNumber (n-1) 
+    | n >= 900 && n < 1000 = 'C' : romanNumber (n+100)
+    | n >= 400 && n < 500  = 'C' : romanNumber (n+100)
+    | n >= 90 && n < 100 = 'X' : romanNumber (n+10)
+    | n >= 40 && n < 50 = 'X' : romanNumber (n+10)
+    | n == 9  = 'I' : romanNumber (n+1)
+    | n == 4  = 'I' : romanNumber (n+1)
+romanNumber n = let (d,v) = matchDigit n in d:romanNumber (n-v) 
 
 readRoman :: String -> Int
 readRoman [] = 0
