@@ -1,4 +1,6 @@
 module Roman where
+
+romanNumber :: Int -> String
 romanNumber n
     | n == 0 = ""
     | n >= 1000 = 'M' : romanNumber (n-1000)
@@ -15,6 +17,7 @@ romanNumber n
     | n >= 4  = 'I' : romanNumber (n+1)
     | otherwise = 'I' : romanNumber (n-1) 
 
+good :: [(Int, String)]
 good = [
     (1, "I"),
     (2, "II"),
@@ -51,8 +54,8 @@ good = [
     (3297, "MMMCCXCVII"),
     (3999, "MMMCMXCIX")
     ]
-test = [(x,romanNumber (fst x))| x <- good, snd x /= romanNumber (fst x)]
+test :: [(Int, String, String)]
+test = [(d,r,romanNumber d) | (d,r) <- good, r /= romanNumber d]
 
-romanNumber :: (Integral a) => a -> String
 main = do
-    print (test)
+    print (romanNumber 1)
